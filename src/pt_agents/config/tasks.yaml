@@ -9,9 +9,7 @@ research_task:
 
 reporting_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Review the context you got and make it concise for a report.
   expected_output: >
-    A fully fledge reports with the mains topics, each with a full section of information.
     Formatted as markdown without '```'
   agent: reporting_analyst
