@@ -1,15 +1,13 @@
-research_task:
-  description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is 2024.
-  expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
-
 reporting_task:
   description: >
-    Review the context you got and make it concise for a report.
+    Review the context you got and make it good enough for a report.
   expected_output: >
     Formatted as markdown without '```'
   agent: reporting_analyst
+#
+port_scanning_task:
+  description: >
+    Scan the host "scanme.nmap.org" using RustScan
+  expected_output: >
+    The relevent details from the results of the RustScan or an error message.
+  agent: network_penetration_tester

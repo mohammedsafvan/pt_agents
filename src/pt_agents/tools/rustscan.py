@@ -16,71 +16,67 @@ RUSTSCAN_DOCS = load_file(
 @tool("RustScan")
 def rustscan(
     addresses: str,
-    ports: str | None = None,
-    range_ports: str | None = None,
-    exclude_ports: str | None = None,
-    batch_size: int = 4500,
-    timeout: int = 1500,
-    tries: int = 1,
-    ulimit: int | None = None,
-    greppable: bool = False,
-    no_config: bool = False,
-    accessible: bool = False,
-    top_ports: bool = False,
-    scan_order: str = "serial",
-    command: str | None = None,
-) -> str:
+    # ports: Union[str, None] = None,
+    # range_ports: Union[str, None] = None,
+    # exclude_ports: Union[str, None] = None,
+    # batch_size: int = 4500,
+    # timeout: int = 1500,
+    # tries: int = 1,
+    # ulimit: Union[int, None] = None,
+    # greppable: bool = False,
+    # no_config: bool = False,
+    # accessible: bool = False,
+    # top_ports: bool = False,
+    # scan_order: str = "serial",
+    # command: Union[str, None] = None,
+):
     """
-    Executes a RustScan scan and returns the results.
+    Perform a RustScan scan on specified addresses and ports.
 
-    Parameters:
-    - addresses (str): Comma-separated addresses or hosts to be scanned.
-    - ports (str, optional): Comma-separated list of ports to scan (e.g., "80,443").
-    - range_ports (str, optional): Range of ports to scan (e.g., "1-1000").
-    - exclude_ports (str, optional): Comma-separated list of ports to exclude (e.g., "21,22").
-    - batch_size (int, optional): The batch size for port scanning.
-    - timeout (int, optional): Timeout in milliseconds before a port is assumed to be closed.
-    - tries (int, optional): Number of tries before a port is assumed to be closed.
-    - ulimit (int, optional): Automatically ups the ULIMIT to the value provided.
-    - greppable (bool, optional): Outputs only the ports, no Nmap.
-    - no_config (bool, optional): Ignores the configuration file.
-    - accessible (bool, optional): Accessible mode for better screen reader compatibility.
-    - top_ports (bool, optional): Scan only the top 1000 most common ports.
-    - scan_order (str, optional): Order of port scanning, 'serial' or 'random'.
-    - command (str, optional): Additional command for Nmap or other further actions.
+    **Parameters:**
+    - `addresses` (str, required):
+        - A comma-separated list of addresses or hosts to scan (e.g., "192.168.0.1,example.com").
 
-    Returns:
-    - str: The results of the RustScan or an error message.
+    **Returns:**
+    - `str`: The result of the RustScan process or an error message if the scan fails.
+
+    **Usage Notes:**
+    - At least the `addresses` parameter must be provided.
+    - `ports` and `range_ports` are mutually exclusive; provide only one.
+    - Ensure proper permissions and system limits (e.g., `ulimit`) for optimal performance.
     """
+    rustscan_path = os.path.join(os.path.dirname(__file__), "rustscan")
+    print(rustscan_path)
+    if not os.path.isfile(rustscan_path):
+        raise FileNotFoundError(f"rust scan not found in {rustscan_path}")
+    base_command = f"{rustscan_path} -a {addresses}"
 
-    base_command = f"./rustscan -a {addresses}"
-
-    if ports:
-        base_command += f" -p {ports}"
-    if range_ports:
-        base_command += f" -r {range_ports}"
-    if exclude_ports:
-        base_command += f" -e {exclude_ports}"
-    if batch_size:
-        base_command += f" -b {batch_size}"
-    if timeout:
-        base_command += f" -t {timeout}"
-    if tries:
-        base_command += f" --tries {tries}"
-    if ulimit:
-        base_command += f" -u {ulimit}"
-    if greppable:
-        base_command += " -g"
-    if no_config:
-        base_command += " -n"
-    if accessible:
-        base_command += " --accessible"
-    if top_ports:
-        base_command += " --top"
-    if scan_order:
-        base_command += f" --scan-order {scan_order}"
-    if command:
-        base_command += f" -- {command}"
+    # if ports:
+    #     base_command += f" -p {ports}"
+    # if range_ports:
+    #     base_command += f" -r {range_ports}"
+    # if exclude_ports:
+    #     base_command += f" -e {exclude_ports}"
+    # if batch_size:
+    #     base_command += f" -b {batch_size}"
+    # if timeout:
+    #     base_command += f" -t {timeout}"
+    # if tries:
+    #     base_command += f" --tries {tries}"
+    # if ulimit:
+    #     base_command += f" -u {ulimit}"
+    # if greppable:
+    #     base_command += " -g"
+    # if no_config:
+    #     base_command += " -n"
+    # if accessible:
+    #     base_command += " --accessible"
+    # if top_ports:
+    #     base_command += " --top"
+    # if scan_order:
+    #     base_command += f" --scan-order {scan_order}"
+    # if command:
+    #     base_command += f" -- {command}"
 
     # Execute the command using subprocess
     process = subprocess.Popen(
@@ -102,9 +98,14 @@ def rustscan_docs() -> str:
     Returns:
     - str: Latest RustScan documentation with examples
     """
-
+    rustscan_path = os.path.join(os.path.dirname(__file__), "rustscan")
+    if not os.path.isfile(rustscan_path):
+        raise FileNotFoundError(f"rust scan not found in {rustscan_path}")
     process = subprocess.Popen(
-        f"rustscan -h", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        f"{rustscan_path} -h",
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     )
     stdout, stderr = process.communicate()
 
