@@ -1,5 +1,5 @@
 import subprocess
-from crewai_tools import tool
+from crewai.tools import tool
 import os
 
 
@@ -46,7 +46,6 @@ def rustscan(
     - Ensure proper permissions and system limits (e.g., `ulimit`) for optimal performance.
     """
     rustscan_path = os.path.join(os.path.dirname(__file__), "rustscan")
-    print(rustscan_path)
     if not os.path.isfile(rustscan_path):
         raise FileNotFoundError(f"rust scan not found in {rustscan_path}")
     base_command = f"{rustscan_path} -a {addresses}"
