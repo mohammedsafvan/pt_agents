@@ -51,3 +51,7 @@ from `frontend` directory type `npm run dev`
 - [ ] Adding Markdown rendering at the frontend(Not Streaming for the time being)
 - [ ] Log streaming to the frontend
 - [ ] Add searching through expoitDB for vulnerable version and fetch them
+
+# Please do not use for unethical purpose
+This tool is designed strictly for ethical and legal purposes.
+Please use it in only that way!
