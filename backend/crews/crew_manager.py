@@ -10,19 +10,22 @@ os.environ["OPENAI_API_KEY"] = (
     "dummy_key"  # Don't know why, crew ai just throwing validation error for OPENAI_API_KEY; So setting a dummpy one
 )
 
+agents_config = "config/agents.yaml"
+tasks_config = "config/tasks.yaml"
+
 llm = LLM(
     model="gemini/gemini-1.5-flash",
 )
 
 
 def create_crew():
+    # Agents
     network_penetration_tester = Agent(
         role="Network Penetration Tester",
         goal="Execute advanced penetration tests to uncover network vulnerabilities using sophisticated techniques and tools.",
         backstory="As an expert network penetration tester, you specialize in simulating cyber attacks on networks to identify vulnerabilities before they can be exploited maliciously. With a deep understanding of security frameworks and tools, you have successfully fortified numerous enterprise networks against potential threats. Your analytical skills and strategic approach have earned you recognition in the cybersecurity community, and you continue to stay ahead of the curve by mastering emerging technologies and methodologies.",
         llm=llm,
         verbose=True,
-        allow_delegation=True,
         tools=[rustscan.rustscan_docs, rustscan.rustscan],
     )
     reporting_analyst = Agent(
@@ -31,9 +34,9 @@ def create_crew():
         backstory="You're a meticulous analyst with a keen eye for detail. You're known for your ability to turn complex data into clear and concise reports, making it easy for others to understand and act on the information you provide.",
         llm=llm,
         verbose=True,
-        allow_delegation=True,
     )
 
+    # Tasks
     reporting_task = Task(
         description="Review the context you got and make it good enough for a report.",
         expected_output="Formatted as markdown without '```'",
