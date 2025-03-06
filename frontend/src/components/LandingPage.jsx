@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 
-import safvanImage from "../assets/images/team/safvan.jpeg";
+import safvanImage from "../assets/images/team/safvan.png";
 import ashifImage from "../assets/images/team/ashif.jpeg";
 import ashirvadImage from "../assets/images/team/ashirvad.jpeg";
 
