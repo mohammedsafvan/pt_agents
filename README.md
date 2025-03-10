@@ -38,7 +38,7 @@ Running the application
 > This will start the backend fastapi server
 > You can check the api documentation using `http://localhost:8000/docs`
 
-#### Frontend (No Frontend available)
+#### Frontend
 
 from `frontend` directory type `npm run dev`
 
@@ -47,9 +47,9 @@ from `frontend` directory type `npm run dev`
 ## TODO
 
 - [ ] Need to validate the addres or host using `@before_kickoff`
-- [ ] Adding basic frontend layout
-- [ ] Adding Markdown rendering at the frontend(Not Streaming for the time being)
-- [ ] Log streaming to the frontend
+- [x] Adding basic frontend layout
+- [x] Adding Markdown rendering at the frontend(Not Streaming for the time being)
+- [ ] Log streaming to the frontend (Cancelled)
 - [ ] Add searching through expoitDB for vulnerable version and fetch them
 
 # Please do not use for unethical purpose
