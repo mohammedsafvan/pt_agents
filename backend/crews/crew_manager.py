@@ -2,7 +2,7 @@ from crewai import Agent, Task, Crew, Process, LLM
 from dotenv import load_dotenv
 import os
 
-from .tools import rustscan
+from .tools import rustscan, netattacker
 
 load_dotenv("../../.env")
 
@@ -26,7 +26,12 @@ def create_crew(host: str):
         backstory="As an expert network penetration tester, you specialize in simulating cyber attacks on networks to identify vulnerabilities before they can be exploited maliciously. With a deep understanding of security frameworks and tools, you have successfully fortified numerous enterprise networks against potential threats. Your analytical skills and strategic approach have earned you recognition in the cybersecurity community, and you continue to stay ahead of the curve by mastering emerging technologies and methodologies.",
         llm=llm,
         verbose=True,
-        tools=[rustscan.rustscan_docs, rustscan.rustscan],
+        tools=[
+            rustscan.rustscan_docs,
+            rustscan.rustscan,
+            # netattacker.get_nettacker_docs,
+            # netattacker.nettacker,
+        ],
     )
     writer_agent = Agent(
         role="Report Writer",
@@ -53,20 +58,24 @@ def create_crew(host: str):
     # Tasks
     build_cybersecurity_report = Task(
         description=(
-            "Generate a comprehensive report on the recent cybersecurity scan results. "
-            "This report should incorporate external research and web-based findings to "
-            "evaluate detected vulnerabilities, compare them with industry standards, and "
-            "recommend mitigation strategies based on current best practices. Highlight any "
-            "threats identified and discuss their potential impacts. The report should be "
-            "clear and accessible to both technical and non-technical stakeholders."
+            "Generate a comprehensive cybersecurity report based on recent scan results. "
+            "This report should not only present the findings but also provide structured insights using tables, charts, and visual elements where necessary. "
+            "Key details should be categorized clearly to enhance readability for both technical and non-technical stakeholders.\n\n"
+            "### Key Elements to Include:\n"
+            "- **Summary Table:** Overview of detected vulnerabilities, their severity levels, and affected systems.\n"
+            "- **Visual Representations:** Where applicable, use charts/diagrams to illustrate vulnerability trends and potential attack vectors.\n"
+            "- **Comparative Analysis Table:** Compare identified vulnerabilities against industry benchmarks and best practices.\n"
+            "- **Mitigation Strategies:** Present actionable recommendations using a structured format (e.g., bullet points or a table).\n"
+            "- **Threat Impact Assessment:** Clearly outline the risks associated with each threat, using color-coded risk levels to enhance clarity."
         ),
         agent=writer_agent,
         expected_output=(
-            "A detailed report consisting of 10 to 20 paragraphs, covering in-depth analysis of "
-            "cybersecurity vulnerabilities, comparative industry insights, and mitigation strategies. "
-            "The report should be written in plain text, ensuring clarity and accessibility for a "
-            "diverse audience. It should also feature a section on newly identified threats and "
-            "their potential impacts."
+            "A detailed cybersecurity report structured for readability and clarity. It should contain:\n"
+            "- **10 to 20 paragraphs** of in-depth analysis.\n"
+            "- **Tables and visual elements** to categorize vulnerabilities, risk levels, and mitigation strategies.\n"
+            "- **Industry comparison insights** in a structured format.\n"
+            "- **A dedicated section** for newly identified threats, emphasizing their potential impact with visual markers.\n\n"
+            "The final document should be accessible to both technical and non-technical readers, ensuring clear and actionable takeaways."
         ),
     )
 
@@ -91,14 +100,17 @@ def create_crew(host: str):
         output_file="output.md",
     )
 
-    port_scanning_task = Task(
-        description=f'Scan the host "{host}" using RustScan',
-        expected_output="The relevant details from the results of the RustScan or an error message.",
+    vulnerability_assessment_task = Task(
+        description=f'Perform a vulnerability assessment on the host "{host}". '
+        "Identify open ports, detect associated vulnerabilities, and assess their severity. "
+        "Provide insights on potential risks and mitigation strategies.",
+        expected_output="A structured vulnerability assessment report, including detected vulnerabilities, "
+        "their severity levels, potential impacts, and recommended mitigation steps, or an error message.",
         agent=network_penetration_tester,
     )
     crew = Crew(
         tasks=[
-            port_scanning_task,
+            vulnerability_assessment_task,
             build_cybersecurity_report,
             convert_report_to_markdown,
         ],

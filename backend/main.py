@@ -20,15 +20,107 @@ async def ping():
     return {"Hello": "World"}
 
 
-@app.get("/test")
+@app.post("/test")
 async def test():
+    # This is only for frontend mocking
     data = {
         "result": {
             "description": "Convert the provided plain text document into a well-formatted Markdown document. The text includes several sections such as headers, lists, code snippets, and tables. Your task is to apply Markdown syntax appropriately to enhance readability and structure. Ensure that headers are clearly defined, lists are properly bulleted or numbered, code snippets are enclosed in code blocks, and tables are correctly formatted. The document should be ready for publishing on a professional platform.1. The Markdown Converter will receive the plain text report from the Report Writer (output from Task 2).\n2. The Markdown Converter will process the plain text report, identifying headers, lists, code snippets, and tables.\n3. The Markdown Converter will apply appropriate Markdown syntax to each identified element:\n   - Headers: Use '#' symbols to define headers (e.g., # Header 1, ## Header 2).\n   - Lists: Use '*' or '-' for bulleted lists and numbers for numbered lists.\n   - Code Snippets: Enclose code snippets within backticks (`) or triple backticks (```).\n   - Tables: Use the Markdown table syntax to create tables with rows and columns.\n4. The Markdown Converter will ensure that the final Markdown document is well-formatted, visually organized, and maintains the semantic structure of the original text. Ensure best practices are followed and maintain clearness.\n5. The Markdown Converter will output the raw Markdown formatted document for direct frontend consumption.",
             "name": None,
             "expected_output": "A raw Markdown formatted document with distinct sections for headers, lists, code blocks, and tables. The document should follow Markdown best practices, be visually organized, and maintain the semantic structure of the original text. Ensure the final document is suitable for professional publication and meets the standards of clarity and accessibility.Formatted as markdown without '```' for direct frontend consumption",
             "summary": "Convert the provided plain text document into a well-formatted Markdown...",
-            "raw": "```markdown\n# Cybersecurity Vulnerability Assessment Report\n\n**Date:** October 26, 2023\n\n**Target:** [2600:3c01::f03c:91ff:fe18:bb2f]\n\n**Executive Summary:**\n\nThis report details the findings of a recent cybersecurity scan conducted on the target system [2600:3c01::f03c:91ff:fe18:bb2f]. The scan identified three open ports: 22, 80, and 31337. Each of these ports represents a potential entry point for malicious actors. This report analyzes the vulnerabilities associated with the services running on these ports, compares them against industry standards, and provides recommendations for mitigation. It is crucial to address these vulnerabilities promptly to minimize the risk of exploitation.\n\n## 1. Open Ports and Service Identification:\n\nThe RustScan results revealed the following open ports:\n\n*   **Port 22:** Typically associated with SSH (Secure Shell), a protocol used for secure remote access to the system.\n*   **Port 80:** Commonly used for HTTP (Hypertext Transfer Protocol), the foundation of data communication on the World Wide Web.\n*   **Port 31337:** This port is not a standard port and is often associated with \"elite\" or \"leet\" hacker culture. Its presence indicates a potential custom service or an intentionally configured port.\n\n## 2. Vulnerability Analysis:\n\n*   **Port 22 (SSH):** SSH, while designed to be secure, can be vulnerable to several attacks. Older versions of SSH may contain known vulnerabilities that allow attackers to gain unauthorized access. Weak password policies can also lead to brute-force attacks, where attackers try to guess the correct password. Another potential issue is the use of default SSH keys, which are publicly known and can be used to impersonate the server. According to NIST's National Vulnerability Database (NVD), vulnerabilities like CVE-2016-20012, CVE-2016-20013 and CVE-2019-6111, relating to password recovery and timing attacks have been identified in OpenSSH. [1]\n\n*   **Port 80 (HTTP):** HTTP is an unencrypted protocol and is vulnerable to eavesdropping and man-in-the-middle attacks. If the website or web application served over HTTP is not properly secured, it can be susceptible to various web application vulnerabilities, such as cross-site scripting (XSS), SQL injection, and cross-site request forgery (CSRF). Furthermore, the lack of encryption means that sensitive data transmitted over HTTP can be intercepted by attackers. OWASP (Open Web Application Security Project) lists common web vulnerabilities, highlighting the risks associated with unencrypted HTTP traffic [2]. Using tools such as OWASP ZAP, one can discover the vulnerabilities related to the exposed webpage.\n\n*   **Port 31337:** Due to its non-standard nature, the service running on port 31337 is particularly concerning. Without further investigation, it's impossible to determine the exact nature of the service. It could be a custom application with unknown vulnerabilities, a backdoor left intentionally, or a misconfigured service. Nmap scripting engine is an extremely useful tool to determine the nature of the service [3]. This port should be investigated immediately to identify the service and assess its security.\n\n## 3. Comparison Against Industry Standards:\n\nIndustry standards such as NIST Cybersecurity Framework and OWASP provide guidelines for securing systems and applications. The identified vulnerabilities violate several of these standards. For example, the use of HTTP without encryption violates the principle of confidentiality, as outlined in NIST SP 800-53 [4]. Similarly, the potential for web application vulnerabilities on port 80 contradicts OWASP's recommendations for secure coding practices [2]. The presence of a non-standard port like 31337 deviates from the principle of least privilege and secure configuration management.\n\n## 4. Mitigation Strategies:\n\n*   **Port 22 (SSH):**\n    *   **Update SSH:** Ensure that the SSH server is running the latest version with all security patches applied.\n    *   **Enforce Strong Passwords:** Implement strong password policies and consider multi-factor authentication (MFA).\n    *   **Disable Password Authentication:** Use SSH keys instead of passwords for authentication.\n    *   **Limit Access:** Restrict SSH access to only authorized users and IP addresses.\n    *   **Regularly audit keys:** Regularly audit authorized keys to remove any potentially unauthorized keys.\n\n*   **Port 80 (HTTP):**\n    *   **Implement HTTPS:** Migrate from HTTP to HTTPS by installing an SSL/TLS certificate.\n    *   **Web Application Firewall (WAF):** Deploy a WAF to protect against web application attacks.\n    *   **Secure Coding Practices:** Adhere to secure coding practices to prevent web application vulnerabilities.\n    *   **Regular Security Audits:** Conduct regular security audits and penetration testing to identify and address vulnerabilities.\n\n*   **Port 31337:**\n    *   **Identify the Service:** Immediately identify the service running on port 31337.\n    *   **Vulnerability Assessment:** Conduct a thorough vulnerability assessment of the service.\n    *   **Disable or Secure:** Either disable the service if it's not needed or implement appropriate security measures to protect it.\n    *   **Network Segmentation:** Isolate the system running the service on port 31337 from other critical systems.\n\n## 5. Threat Identification and Potential Impact:\n\nThe identified vulnerabilities pose several significant threats to the target system:\n\n*   **Unauthorized Access:** Exploitation of SSH vulnerabilities could allow attackers to gain unauthorized access to the system, potentially leading to data theft, system compromise, and denial of service.\n*   **Data Interception:** The use of HTTP without encryption exposes sensitive data to interception by attackers, including usernames, passwords, and other confidential information.\n*   **Web Application Attacks:** Web application vulnerabilities on port 80 could allow attackers to deface the website, steal data, or inject malicious code.\n*   **Unknown Service Exploitation:** The service running on port 31337 could be a backdoor or a vulnerable application that allows attackers to gain complete control of the system.\n\nThe potential impact of these threats includes:\n\n*   **Data Breach:** Loss of sensitive data, leading to financial and reputational damage.\n*   **System Compromise:** Complete control of the system by attackers, allowing them to install malware, steal data, or launch attacks against other systems.\n*   **Denial of Service:** Disruption of services, preventing legitimate users from accessing the system.\n*   **Legal and Regulatory Consequences:** Violation of data protection laws and regulations, leading to fines and penalties.\n\n## 6. Recommendations:\n\nIt is recommended that the following actions be taken immediately:\n\n1.  Investigate the service running on port 31337 and take appropriate action.\n2.  Implement HTTPS on port 80.\n3.  Harden the SSH configuration on port 22.\n4.  Conduct regular security audits and penetration testing.\n5.  Implement a security awareness training program for all users.\n\n## 7. Conclusion:\n\nThe identified vulnerabilities pose a significant risk to the target system. By implementing the recommended mitigation strategies, the organization can significantly reduce the risk of exploitation and protect its data and systems from attack. Continuous monitoring and regular security assessments are essential to maintain a strong security posture.\n\n## References\n\n[1] National Vulnerability Database (NVD) - [https://nvd.nist.gov/](https://nvd.nist.gov/)\n\n[2] Open Web Application Security Project (OWASP) - [https://owasp.org/](https://owasp.org/)\n\n[3] Nmap Scripting Engine (NSE) - [https://nmap.org/nsedoc/](https://nmap.org/nsedoc/)\n\n[4] NIST Special Publication 800-53 - [https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final)\n```",
+            "raw": """# Cybersecurity Vulnerability Assessment Report: scanme.nmap.org
+
+This report details the findings of a comprehensive cybersecurity vulnerability assessment conducted on scanme.nmap.org. The assessment aimed to identify potential security weaknesses that could be exploited by malicious actors. The scan revealed several open ports and potential vulnerabilities associated with the services running on those ports. This report outlines these findings, provides a risk and impact analysis, and recommends actionable mitigation strategies to enhance the security posture of the target host. The intended audience for this report includes both technical staff and non-technical stakeholders.
+
+## Executive Summary
+
+The vulnerability assessment of scanme.nmap.org identified three open ports: 22 (SSH), 80 (HTTP), and 31337 (elite). Potential vulnerabilities were detected in the SSH and HTTP services. Specifically, the versions of OpenSSH and Apache httpd running on the target host are susceptible to known security flaws. An unknown service running on port 31337 requires further investigation to determine its purpose and potential risks. The overall severity of the identified vulnerabilities is rated as **medium**, necessitating prompt implementation of the recommended mitigation strategies to prevent potential exploitation.
+
+## Target Host Information
+
+The target host, scanme.nmap.org, was assessed for vulnerabilities. Key details are as follows:
+
+- **Target:** scanme.nmap.org
+- **IP Address:** 45.33.32.156 (IPv4), 2600:3c01::f03c:91ff:fe18:bb2f (IPv6)
+- **Operating System:** Likely Linux (Kernel 5.x or 4.x), OS detection was unreliable due to filtered ports.
+
+## Open Ports and Services
+
+The following table summarizes the open ports and services identified during the scan:
+
+| Port  | Protocol | Service | Version                                         |
+| :---- | :------- | :------ | :---------------------------------------------- |
+| 22    | TCP      | SSH     | OpenSSH 7.6p1 Ubuntu 4ubuntu0.7                 |
+| 80    | TCP      | HTTP    | Apache httpd 2.4.29 ((Ubuntu))                 |
+| 31337 | TCP      | elite   | syn-wait (Potentially a custom or unknown service) |
+
+## Vulnerability Descriptions
+
+The following sections provide detailed descriptions of the identified vulnerabilities:
+
+### 1. OpenSSH 7.6p1 Vulnerabilities (Port 22)
+
+- **Description:** OpenSSH versions prior to 7.7 are susceptible to multiple vulnerabilities. While specific exploits targeting version 7.6p1 may vary, common risks associated with older SSH versions include potential weaknesses in key exchange algorithms, cipher suites, and user authentication mechanisms. Absence of the latest patches can expose the system to known exploits.
+- **CVE IDs:** (Search on NVD or Exploit-DB for specific CVEs related to OpenSSH 7.6)
+- **Severity:** Medium
+
+### 2. Apache httpd 2.4.29 Vulnerabilities (Port 80)
+
+- **Description:** Apache httpd 2.4.29 is vulnerable to several security flaws. A common vulnerability is related to how Apache handles requests, potentially leading to denial-of-service (DoS) attacks or information disclosure. Additionally, outdated versions of Apache might lack security patches for known vulnerabilities.
+- **CVE IDs:** (Search on NVD or Exploit-DB for specific CVEs related to Apache 2.4.29)
+- **Severity:** Medium
+
+### 3. Unknown Service (Port 31337)
+
+- **Description:** The service running on port 31337 is identified as "elite syn-wait," suggesting it may be a custom or less common application. Without further investigation, it's impossible to determine specific vulnerabilities. However, any custom service should be treated with caution, as it may not have undergone rigorous security testing.
+- **CVE IDs:** N/A (Service not recognized)
+- **Severity:** Medium (Requires further investigation)
+
+## Risk and Impact Analysis
+
+The following table summarizes the risk and potential impact associated with each identified vulnerability:
+
+| Vulnerability             | Risk                                                                                                 | Impact                                                              | Likelihood        |
+| :------------------------ | :--------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------ | :---------------- |
+| OpenSSH Vulnerabilities   | Exploitation could allow unauthorized remote access, leading to data breaches and system compromise. | High. Full system compromise is possible.                           | Medium            |
+| Apache httpd Vulnerabilities | Exploitation could lead to denial-of-service attacks, information disclosure, or remote code execution. | Medium. Potential for data breaches or service disruption.           | Medium            |
+| Unknown Service (31337)   | Uncertain risk. Could be a backdoor or a vulnerable application.                                  | Unknown. Could range from informational disclosure to full compromise. | Low to Medium     |
+
+## Mitigation Recommendations
+
+The following table provides actionable recommendations for mitigating the identified vulnerabilities:
+
+| Vulnerability             | Mitigation                                                                                                                              | Justification                                                                                                                                                   |
+| :------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OpenSSH Vulnerabilities   | 1. Upgrade to the latest stable version of OpenSSH. 2. Apply all security patches. 3. Harden SSH configuration (disable password authentication, enforce key-based authentication). 4. Review `/etc/ssh/sshd_config`. | Resolves known vulnerabilities, reduces the attack surface, and enhances security through key-based authentication.                                     |
+| Apache httpd Vulnerabilities | 1. Upgrade to the latest stable version of Apache httpd. 2. Apply all security patches. 3. Disable unnecessary modules. 4. Implement a Web Application Firewall (WAF).                                             | Resolves known vulnerabilities, reduces the attack surface, and provides protection against common web attacks.                                          |
+| Unknown Service (31337)   | 1. Investigate the service to identify the application. 2. Perform a security assessment. 3. Restrict access to trusted networks or hosts. 4. Monitor traffic for suspicious activity.                               | Understanding the service is crucial to assessing its risk. Restricting access limits the potential for exploitation, and monitoring helps detect anomalies. |
+
+## Newly Identified Threats Spotlight
+
+The unknown service running on port 31337 poses a unique and potentially significant threat. The inability to immediately identify the service means its purpose and vulnerabilities are unknown, making it crucial to prioritize its investigation.
+
+**Warning:** The unknown service could be a backdoor, a deliberately planted vulnerability, or a misconfigured application. **Immediate action is required** to determine its function and potential risks.
+
+## Comparative Analysis Against Industry Benchmarks
+
+Comparing the current security posture against industry benchmarks reveals areas for improvement. For example, CIS benchmarks for SSH and Apache recommend specific configuration settings and patching levels. The identified vulnerabilities indicate deviations from these best practices, highlighting the need for remediation to align with industry standards.
+
+| Area               | Current Status                                       | Industry Benchmark                                  | Recommendation                                                                |
+| :----------------- | :--------------------------------------------------- | :-------------------------------------------------- | :---------------------------------------------------------------------------- |
+| OpenSSH Version    | 7.6p1                                                | Latest stable version                               | Upgrade to the latest stable version of OpenSSH                               |
+| Apache httpd Version | 2.4.29                                               | Latest stable version                               | Upgrade to the latest stable version of Apache httpd                              |
+| SSH Configuration  | Default configuration (potentially weak)             | CIS benchmark recommendations                       | Review and harden SSH configuration based on CIS benchmark recommendations |
+| Apache Modules     | Potentially unnecessary modules enabled               | Minimal set of required modules                     | Disable any Apache modules that are not required                                |
+
+## Conclusion
+
+This vulnerability assessment revealed potential security risks associated with the OpenSSH and Apache httpd services running on scanme.nmap.org, as well as an unknown service. Implementing the recommended mitigation strategies will significantly improve the security posture of the target host. Prioritize the upgrade of OpenSSH and Apache httpd, harden SSH configurations, and thoroughly investigate the unknown service on port 31337. Regular vulnerability assessments should be conducted to continuously monitor and improve the security of the system. Specifically, the next steps are:
+
+1.  Isolate port 31337
+2.  Upgrade OpenSSH and Apache
+3.  Run another scan to verify the changes.""",
             "pydantic": None,
             "json_dict": None,
             "agent": "Markdown Converter",
