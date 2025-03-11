@@ -23,6 +23,11 @@ function LandingPage() {
 			image: ashirvadImage,
 			github: "https://github.com/Ashirvadtb",
 		},
+		{
+			name: "Minhad",
+			// image: ashirvadImage,
+			github: "https://github.com/manmuscle",
+		},
 	];
 
 	return (

@@ -65,13 +65,18 @@ function ResultsPage() {
 				.trim();
 		}
 		// Fetching for testing with demo data
-		fetch("http://localhost:8000/test")
+		fetch("http://localhost:8000/test", { method: "POST" })
 			.then((res) => res.json())
 			.then((data) => {
 				setOutput(cleanMarkdownOutput(data.result.raw));
 			})
 			.then(() => {
 				setStatus("completed");
+			})
+			.catch((error) => {
+				console.error(error);
+				setOutput("Error fetching data from the server.");
+				setStatus("error");
 			});
 	}, []);
 
@@ -113,7 +118,7 @@ function ResultsPage() {
 				animate={{ opacity: 1, y: 0 }}
 				className="mx-auto flex flex-col"
 			>
-				<div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl min-w-full flex flex-col flex-grow">
+				<div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl min-w-full h-[800px] flex flex-col flex-grow">
 					{/* Header */}
 					<div className="p-6 border-b dark:border-gray-700">
 						<div className="flex items-center justify-between mb-4">
@@ -144,7 +149,7 @@ function ResultsPage() {
 						</div>
 					</div>
 
-					{/* Output - Now expanded to fill available space with bottom margin */}
+					{/* Output */}
 					<div
 						ref={outputRef}
 						className="p-6 bg-gray-50 dark:bg-gray-900 flex-grow overflow-auto font-mono mb-6"
