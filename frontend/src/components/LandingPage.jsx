@@ -5,6 +5,7 @@ import { FaGithub } from "react-icons/fa";
 import safvanImage from "../assets/images/team/safvan.png";
 import ashifImage from "../assets/images/team/ashif.jpeg";
 import ashirvadImage from "../assets/images/team/ashirvad.jpeg";
+import minhadImage from "../assets/images/team/minhad.jpeg";
 
 function LandingPage() {
 	const teamMembers = [
@@ -25,7 +26,7 @@ function LandingPage() {
 		},
 		{
 			name: "Minhad",
-			// image: ashirvadImage,
+			image: minhadImage,
 			github: "https://github.com/manmuscle",
 		},
 	];
