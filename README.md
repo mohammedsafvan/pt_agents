@@ -20,7 +20,7 @@ add `.env` in root directory using these keys
 
 > ! Ensure that you have `nmap` installed and configured for PATH variables
 
-#### Frontend (Currently No frontend, So skip this)
+#### Frontend
 
 - `cd frontend` from root folder
 - Type `npm i`
@@ -42,7 +42,7 @@ Running the application
 
 from `frontend` directory type `npm run dev`
 
-> This will start the developement frontend
+> This will start the development frontend
 
 ## TODO
 
