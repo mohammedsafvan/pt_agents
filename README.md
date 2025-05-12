@@ -1,5 +1,5 @@
 # Pt-agents
-
+A penetration testing vulnerability assessment tool, Using Agentic AI.
 ## Setup
 
 ### Add .env
